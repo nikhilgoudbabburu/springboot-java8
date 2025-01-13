@@ -1,0 +1,471 @@
+Project : My Project Domain is Motor Insurance, client liberty general insurance india, the main purpose of the project is to provide the motor insurance in india motor insurance is mandatory for all vehicles so here a customer can approach us directly by our website or by dealer customer has to provide the vehicle details like make model engine chassis no and customer details with this we need to validate the request and tranform it asa per the other service request herewe need to make api calls to multiple third party api's like premium calculation and after successfully passing to service finally a policy copy with premium is generated and provided to customer
+
+TCS Interview Question
+1.What is Functional interface
+2.Can we have default methods in interface & functional interface
+3.can we have constructor in abstract class
+4.can we create object of abstract class
+5.write a code to remove duplicate elements from list of employees // use distinct
+6.how to create custom exception
+7.How to handle global exception
+9.What is OAuth, JWT
+1.What is marker interface ? 
+ 
+Accenture Interview questions
+1.What is marker interface ? 
+	In Java, a marker interface is an interface that contains no methods or fields and serves to indicate that a class implementing it possesses certain qualities or should be treated in a specific way by the Java runtime or other parts of the code.
+	Marker interface is used to convey metadata about a class without actually specifying any methods that the class must implement.
+	
+	Serializable:
+	Purpose: Indicates that a class can be serialized—converted into a byte stream and later deserialized (reconstructed from that byte stream).
+		
+		public interface Serializable {
+		// No methods
+		}
+
+		public class MyClass implements Serializable {
+			private int id;
+			private String name;
+
+			// Constructor, getters, setters, etc.
+		}
+	Cloneable:
+	Purpose: Indicates that a class allows its objects to be cloned.
+	Usage: If a class implements Cloneable, its clone() method is allowed to create a field-for-field copy of instances. If not implemented, calling clone() will throw a CloneNotSupportedException.
+	
+		public interface Cloneable {
+		// No methods
+		}
+
+		public class MyClass implements Cloneable {
+			private int id;
+			private String name;
+
+			@Override
+			protected Object clone() throws CloneNotSupportedException {
+				return super.clone();
+			}
+		}
+
+Deep Copy: Copies the object and all the objects it references, creating a new instance for each referenced object.
+
+
+2.What is Concurrent hashmap ?
+	ConcurrentHashMap is a thread-safe, high-performance variant of HashMap in Java that allows concurrent access to the map without the need for external synchronization
+	Null Keys or Values not allowed
+	ConcurrentHashMap provides atomic operations such as putIfAbsent(), remove(), and replace(),
+	map.putIfAbsent("key", "value"); // Adds the key-value pair only if the key is not already present.
+	map.replace("key", "oldValue", "newValue"); // Replaces the value for the key only if it is currently mapped to oldValue.
+	Lock-Free Reads: In Java 8, ConcurrentHashMap uses a lock-free mechanism for read operations, which means that multiple threads can read from the map without blocking each other.
+	CAS Operations: Write operations (like put, remove, etc.) are implemented using Compare-And-Swap (CAS) operations, which are low-level atomic operations that help in achieving thread safety with minimal locking.
+	Bucket Locking: Instead of locking the entire map, ConcurrentHashMap uses finer-grained locking by locking individual buckets or entries. This reduces contention and improves performance.
+	
+3.what is Garbage Collector ? 
+	The Garbage Collector (GC) in Java is a form of automatic memory management that is responsible for reclaiming memory occupied by objects that are no longer in use by the application. It frees up memory by identifying and disposing of objects that are no longer reachable from any live thread, thereby preventing memory leaks and optimizing the use of memory in Java applications.
+	
+	Types of Garbage Collectors in Java
+		Serial Garbage Collector:
+			A simple, single-threaded GC that is suitable for small applications or single-threaded environments.
+			It pauses all application threads during garbage collection (stop-the-world event).
+		Parallel Garbage Collector (also known as Throughput Collector):
+			Uses multiple threads to perform GC work, making it suitable for applications with high throughput requirements.
+			It is a default collector for many Java versions.
+		Concurrent Mark-Sweep (CMS) Garbage Collector:
+			Focuses on reducing pause times by doing most of the work concurrently with the application's threads.
+	How to Trigger Garbage Collection
+		System.gc(): The System.gc() method suggests that the JVM run the garbage collector, but it is not guaranteed. The JVM decides whether to perform garbage collection based on its own heuristics.
+	
+		MyObject obj1 = new MyObject();
+        MyObject obj2 = new MyObject();
+
+        obj1 = null; // obj1 is now eligible for garbage collection
+
+        System.gc(); // Suggest the JVM to run the garbage collector
+
+        obj2 = null; // obj2 is now also eligible for garbage collection
+
+        // The actual garbage collection may happen at any time after the objects become unreachable
+
+4.How garbage collector are started ?
+	In Java, the Garbage Collector (GC) is automatically managed by the Java Virtual Machine (JVM). The JVM decides when to start the garbage collection process based on the application's memory usage and other internal heuristics. Here’s how and when the garbage collector is started:
+
+	1. Automatic Trigger by JVM:
+		Memory Pressure: The JVM monitors memory usage in the heap. When the heap usage reaches a certain threshold, the JVM may trigger garbage collection to free up memory. This is the most common way garbage collection is initiated.
+		Generation Thresholds: In generational garbage collectors (like the G1, Parallel, or CMS collectors), garbage collection can be triggered when certain memory regions (like the Young Generation) reach their capacity.
+		Full GC: When there is not enough free memory available, the JVM may trigger a full garbage collection, which is more comprehensive and attempts to reclaim memory from the entire heap, including both the Young and Old Generations.
+	2. Manual Trigger by Code:
+		System.gc(): Developers can suggest that the JVM performs garbage collection by calling System.gc(). However, this is only a suggestion, and the JVM is not obligated to run the garbage collector immediately or at all.
+		Runtime.getRuntime().gc(): Similar to System.gc(), this method allows you to request garbage collection, but the JVM has the final decision on when or if to run the garbage collector.
+	3. JVM Arguments:
+		Garbage collection behavior can be influenced by specifying JVM arguments at startup. These arguments can control when the
+		-XX:+UseG1GC: Enables the G1 Garbage Collector.
+5.What are objects are deleted first when garbage collector is initiated ? 
+	When the Garbage Collector (GC) is initiated in Java, it doesn't delete objects in a specific order based on a predefined sequence, but rather, it identifies and deletes objects based on their reachability and the generation they belong to within the heap.
+6.what is meant by try with resources
+	The try-with-resources statement in Java provides a powerful and convenient way to manage resources that need to be closed after use, such as files, sockets, and database connections. By automating the closing process and reducing boilerplate code, it helps prevent resource leaks and makes code cleaner and more maintainable.
+	
+	try (FileInputStream fis = new FileInputStream("file.txt");
+     BufferedReader reader = new BufferedReader(new InputStreamReader(fis))) {
+
+    // Use the resources
+    String line;
+    while ((line = reader.readLine()) != null) {
+        System.out.println(line);
+    }
+
+	} catch (IOException e) {
+		// Handle exceptions
+		e.printStackTrace();
+	}
+	
+8.What is JWT token ?
+	JWTs are a versatile tool for authentication, authorization, and information exchange
+	A JWT is composed of three parts, each encoded in Base64Url format and separated by dots (.)
+	Header:
+		Contains metadata about the token, including the type of token (JWT) and the signing algorithm used (e.g., HMAC SHA256, RSA).
+		Example:
+		json
+		Copy code
+		{
+		  "alg": "HS256",
+		  "typ": "JWT"
+		}
+	Payload:
+		Contains the claims or statements about an entity (typically, the user) and additional metadata. Claims can be categorized into:
+		Registered Claims: Standard claims like iss (issuer), exp (expiration time), sub (subject), and aud (audience).
+		Public Claims: Custom claims agreed upon by multiple parties.
+		Private Claims: Custom claims used only within a specific application or system.
+		Example:
+		json
+		Copy code
+		{
+		  "sub": "1234567890",
+		  "name": "John Doe",
+		  "iat": 1516239022
+		}
+	Signature:
+		Used to verify the authenticity of the token and ensure that it has not been tampered with. The signature is created by taking the encoded header and payload, combining them with a secret key or private key (for asymmetric algorithms), and applying the specified signing algorithm.
+		Example using HMAC SHA256:
+		scss
+		Copy code
+		HMACSHA256(
+		  base64UrlEncode(header) + "." +
+		  base64UrlEncode(payload),
+		  secret)
+	Example JWT
+	A JWT might look like this:
+		eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYMTYyMzkwMjJ9.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c
+		
+9.What is authentication & Autherization ? 
+	Authentication is the process of verifying the identity of a user.
+	Authorization is the process of determining whether a user has permission to access a resource or perform a specific action
+10.Springboot Profiles
+	In Spring Boot, profiles are a way to define and manage different configurations for different environments 
+		@Configuration
+		@Profile("dev")
+		public class DevConfig {
+			// Beans and settings specific to the 'dev' profile
+		}
+
+		@Configuration
+		@Profile("prod")
+		public class ProdConfig {
+			// Beans and settings specific to the 'prod' profile
+		}
+
+	# application.properties
+	spring.profiles.active=dev
+
+11.if we have application.properties & application-dev.properties which is read
+	Without Explicit Profile: Only application.properties is used.
+	With Explicit Profile (e.g., dev): Both application.properties and application-dev.properties are loaded. Properties in application-dev.properties override those in application.properties
+	
+12.what is builder design pattern ?
+	Java Builder Pattern: A pattern used to construct complex objects step-by-step, separating the construction process from the representation of the object. It uses a builder class to incrementally set attributes and create an immutable product.
+
+	Spring Boot Microservices: The Builder Pattern is useful for constructing complex response objects, configuring service settings, or creating domain entities with many optional fields, helping to maintain clean and manageable code
+	// Complex response class
+	public class UserResponse {
+		private String username;
+		private String email;
+		private String phoneNumber;
+
+		// Private constructor
+		private UserResponse(Builder builder) {
+			this.username = builder.username;
+			this.email = builder.email;
+			this.phoneNumber = builder.phoneNumber;
+		}
+
+		// Getters
+		public String getUsername() {
+			return username;
+		}
+
+		public String getEmail() {
+			return email;
+		}
+
+		public String getPhoneNumber() {
+			return phoneNumber;
+		}
+
+		// Builder class
+		public static class Builder {
+			private String username;
+			private String email;
+			private String phoneNumber;
+
+			public Builder setUsername(String username) {
+				this.username = username;
+				return this;
+			}
+
+			public Builder setEmail(String email) {
+				this.email = email;
+				return this;
+			}
+
+			public Builder setPhoneNumber(String phoneNumber) {
+				this.phoneNumber = phoneNumber;
+				return this;
+			}
+
+			public UserResponse build() {
+				return new UserResponse(this);
+			}
+		}
+	}
+
+13.Rest Endponits
+	HTTP status codes are used in REST APIs to indicate the result of a client’s request. They provide information about the success or failure of the request 
+		200 OK: Used for successful GET and PUT requests.
+		201 Created: Used when creating a new resource with POST.
+		204 No Content: Used for successful DELETE requests or PUT requests that don’t return any data.
+		400 Bad Request: Used when the client sends invalid data or parameters.
+		401 Unauthorized: Used when authentication is required but not provided or is invalid.
+		403 Forbidden: Used when the client does not have permission to access the resource.
+		404 Not Found: Used when the requested resource cannot be found.
+		500 Internal Server Error: Used when the server encounters an unexpected condition.
+14.Rest Api Operations
+	1. GET
+		Purpose: Retrieve information from the server.
+		Request: No body required. URL specifies the resource to fetch.
+		Example: GET /users/123 retrieves information about user with ID 123.
+		Idempotency: Idempotent (multiple requests have the same result).
+	2. POST
+		Purpose: Create a new resource on the server or submit data to be processed.
+		Request: Contains the data to be created or processed in the request body.
+		Example: POST /users with data { "name": "John Doe", "email": "john.doe@example.com" } creates a new user.
+		Idempotency: Non-idempotent (multiple requests can result in multiple resources).
+	3. PUT
+		Purpose: Update or replace an existing resource.
+		Request: Contains the complete data for the resource to be updated or replaced.
+		Example: PUT /users/123 with data { "name": "John Doe", "email": "john.doe@newdomain.com" } updates user 123.
+		Idempotency: Idempotent (repeated requests have the same result).
+	4. PATCH
+		Purpose: Partially update an existing resource.
+		Request: Contains only the fields that need to be updated.
+		Example: PATCH /users/123 with data { "email": "john.doe@newdomain.com" } updates only the email of user 123.
+		Idempotency: Generally idempotent, but not always guaranteed.
+	5. DELETE
+		Purpose: Remove a resource from the server.
+		Request: No body required. URL specifies the resource to delete.
+		Example: DELETE /users/123 deletes the user with ID 123.
+		Idempotency: Idempotent (multiple requests have the same effect).
+	6. OPTIONS
+		Purpose: Retrieve the allowed HTTP methods and other options for a resource.
+		Request: No body required. URL specifies the resource.
+		Example: OPTIONS /users/123 returns methods like GET, POST, PUT, etc., allowed for user 123.
+		Idempotency: Idempotent.
+	7. HEAD
+		Purpose: Retrieve the headers of a resource, without the body.
+		Request: No body required. URL specifies the resource.
+		Example: HEAD /users/123 retrieves the headers of the resource for user 123.
+		Idempotency: Idempotent.
+	
+15.Java 8 DateTime APi
+	The new API is located in the java.time package and is designed to be immutable and thread-safe
+	Java 8 introduced a new Date and Time API that significantly improves the handling of date and time operations compared to the old java.util.Date and java.util.Calendar classes.
+	
+	Key Classes in the Java 8 Date-Time API
+		
+	LocalDate:
+		Represents a date without time (e.g., 2024-08-08).
+		Example:
+		java
+		Copy code
+		LocalDate today = LocalDate.now();
+		LocalDate birthday = LocalDate.of(1990, 8, 8);
+	LocalTime:
+		Represents a time without a date (e.g., 15:30:00).
+		Example:
+		java
+		Copy code
+		LocalTime now = LocalTime.now();
+		LocalTime meetingTime = LocalTime.of(14, 30);
+	LocalDateTime:
+		Represents a date and time without a time zone (e.g., 2024-08-08T15:30:00).
+		Example:
+		java
+		Copy code
+		LocalDateTime dateTimeNow = LocalDateTime.now();
+		LocalDateTime specificDateTime = LocalDateTime.of(2024, 8, 8, 15, 30);
+	ZonedDateTime:
+		Represents a date and time with a time zone (e.g., 2024-08-08T15:30:00+01:00[Europe/Paris]).
+		Example:
+		java
+		Copy code
+		ZonedDateTime zonedDateTimeNow = ZonedDateTime.now();
+		ZonedDateTime specificZonedDateTime = ZonedDateTime.of(2024, 8, 8, 15, 30, 0, 0, ZoneId.of("Europe/Paris"));
+	DateTimeFormatter:
+		Used to format and parse date-time objects.
+		Example:
+		java
+		Copy code
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+		String formattedDate = LocalDateTime.now().format(formatter);
+		LocalDateTime parsedDate = LocalDateTime.parse("2024-08-08 15:30:00", formatter);
+		
+// format string to date
+		// Original date string
+        String originalDateStr = "2024-08-08";  // Example format: yyyy-MM-dd
+        
+        // Define the original format of the date string
+        DateTimeFormatter originalFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        
+        // Define the desired format
+        DateTimeFormatter targetFormatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+        
+        try {
+            // Parse the original date string to a LocalDate
+            LocalDate date = LocalDate.parse(originalDateStr, originalFormatter);
+            
+            // Format the LocalDate to the target format
+            String formattedDateStr = date.format(targetFormatter);
+            
+            // Output the formatted date
+            System.out.println("Formatted Date: " + formattedDateStr);
+        } catch (DateTimeParseException e) {
+            System.err.println("Invalid date format: " + e.getMessage());
+        }
+
+	
+16.Locking Mechanism
+	 locking is a way to control access to shared resources in a program so that only one thread can use a particular resource at a time. This helps prevent issues that can occur when multiple threads try to access or modify the same data simultaneously, 
+	 Uses : prevent data corruption and Avoid Conflicts
+	 
+	 types of locking
+	 Synchronized Blocks/Methods:
+		Usage: Basic locking provided by Java. You use the synchronized keyword to lock a block of code or an entire method.
+		Example:
+		java
+		Copy code
+		synchronized (this) {
+			// Code that only one thread can execute at a time
+		}
+		
+	ReentrantLock:
+
+		Usage: More advanced locking with additional features like trying to acquire the lock or waiting for a specific time.
+		Example:
+		java
+		Copy code
+		Lock lock = new ReentrantLock();
+		lock.lock(); // Acquire the lock
+		try {
+			// Code that only one thread can execute at a time
+		} finally {
+			lock.unlock(); // Release the lock
+		}
+	ReadWriteLock:
+		Usage: Allows multiple threads to read data simultaneously but only one thread to write data at a time.
+		Example:
+		java
+		Copy code
+		ReadWriteLock rwLock = new ReentrantReadWriteLock();
+		Lock readLock = rwLock.readLock();
+		Lock writeLock = rwLock.writeLock();
+
+		// Reading
+		readLock.lock();
+		try {
+			// Code for reading
+		} finally {
+			readLock.unlock();
+		}
+
+		// Writing
+		writeLock.lock();
+		try {
+			// Code for writing
+		} finally {
+			writeLock.unlock();
+		}
+17.Block &  Synchronized block
+	In Java, a normal block and a synchronized block serve different purposes. Here’s a comparison between the two:
+
+	Normal Block
+	Purpose: Simply groups statements together. It does not provide any special concurrency control or synchronization features.
+	Usage: Regular code execution without any constraints or guarantees about thread safety.
+	Example:
+	java
+	Copy code
+	{
+		// Normal block of code
+		System.out.println("This is a normal block.");
+	}
+	Synchronized Block
+	Purpose: Provides mutual exclusion, ensuring that only one thread can execute a block of code at a time.
+	Usage: Used to control access to shared resources and prevent concurrent access issues such as data corruption.
+	Example:
+	java
+	Copy code
+	synchronized (this) {
+		// Synchronized block of code
+		System.out.println("This is a synchronized block.");
+		// Critical section of code that only one thread can execute at a time
+	}
+	
+
+int [] num = {1,2,3,1,2,3,5};
+
+
+HashMap<Integer, Long> findOcc = num.stream().collect(Collectors.groupBy(n->n,Collectors.counting()));
+
+List<Ingteger> duplicate = new ArrayList<>();
+for(int i=0;i<findOcc.size();i++){
+	int keys = FindOcc.keySet();
+	int values = findOcc.get(keys);
+	
+	if(values>1){
+		duplicate.add(key);
+	}
+
+}
+
+return key;
+
+
+Hashtable<String, String>  ht = new Hashtable<String, String>();
+
+ht.put(new String("1"), "one");
+
+ht.put(new String("2"), "three");
+
+ht.put(new String("3"),new String("5"));
+
+ht.put("1",ht.put(new String("4"), "five"));
+
+ht.put("5",null);
+
+ht.put("3","two");
+
+ 
+
+for(Map.Entry<String, String> entry: ht.entrySet()) {
+
+     System.out.println( entry.getKey()+ " : " + entry.getValue() ); 
+
+}
+

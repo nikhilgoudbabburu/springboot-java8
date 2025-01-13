@@ -1,0 +1,438 @@
+Lambda Expression
+lambda exp is used to implement functional interface in very simple and short manner
+lamda is a anonymous function
+no name no modifier no return type
+syntax : ( ) -> { sop("hello");}
+
+Benefits:
+Reduce lines of code
+Sequential and Parallel execution by passing behavior as argument in method
+to call api very effectively
+To write more readable,maintanable and concise code
+java compiler understands datatype so here 
+we dont ned to mention type 
+
+FUNCTIONAL INTERFACE : Interface which contains only one abstract method 
+
+ABSTRACT METHOD in Java, is a method that has just the method definition but does not contain implementation. 
+
+
+
+JDK is a full-featured software development kit used for developing Java applications. It includes everything needed to develop, compile, and run Java programs.
+
+Components of JDK:
+Java Compiler (javac): Converts Java source code (.java files) into bytecode (.class files).
+Java Virtual Machine (JVM): Executes Java bytecode. JVM is a part of JDK, and it is crucial for running Java programs.
+Java Runtime Environment (JRE): Provides the necessary libraries and components to run Java applications. JRE is included within JDK.
+
+
+
+Threads are lightweight processes within processes as seen. In java, there are two ways of creating threads namely via Thread class and via Runnable interface.
+
+// Creating thread By Extending To Thread class
+
+class MyThread extends Thread {
+
+// Creating thread using Runnable interface
+
+class ThreadUsingInterface implements Runnable {
+
+There are two types of threads in Java as follows:
+
+User thread : User threads are created by java developers for example Main thread. All threads are created inside the main() method are user threads
+Daemon thread:  Daemon thread is a low-priority thread that runs in the background to perform tasks such as garbage collection,
+
+// New (or Born) State:
+
+When a thread instance is created using the new Thread() constructor, it is in the New state. At this point, the thread is not yet started.
+Runnable State:
+
+// Runnable
+A thread enters the Runnable state when the start() method is invoked. In this state, the thread is ready to run and is waiting for CPU time to be scheduled for execution. Note that in the Runnable state, the thread may not necessarily be running but is ready to run.
+
+//Blocked State:
+A thread moves to the Blocked state when it wants to access a synchronized block or method but is waiting for the lock to be released by another thread.
+
+//Waiting State:
+A thread enters the Waiting state when it is waiting indefinitely for another thread to perform a particular action (e.g., waiting for a notification via Object.wait()).
+
+//Timed Waiting State:
+Similar to the Waiting state, but the thread is waiting for a specified period. This can occur when using methods like Thread.sleep(), Object.wait(long timeout), or Thread.join(long millis).
+Terminated (or Dead) State:
+
+A thread enters the Terminated state when it has completed its execution or has been terminated due to an exception. The thread is no longer alive and cannot be started again.
+
+sleep(long millis):
+
+Purpose: Pauses the current thread for the specified number of milliseconds. The thread is not active during this time.
+
+public void wait() throws InterruptedException
+Purpose: Causes the current thread to wait until another thread invokes notify() or notifyAll() on this object.
+
+public void notify()
+Purpose: Wakes up a single thread that is waiting on this object's monitor
+
+Garbage collection (GC) in Java is an automatic memory management process that helps reclaim memory used by objects that are no longer reachable or needed by the application
+
+String s1 = "sa"; uses string pool
+String s2 = new String("sa"); uses heap memory
+
+StringBuffer: Thread-safe, synchronized, generally slower due to synchronization overhead. Use it when you need a mutable string in a multi-threaded environment.
+StringBuilder: Not thread-safe, unsynchronized, generally faster due to the lack of synchronization. Use it when working with mutable strings in a single-threaded environment.
+
+
+
+// Optional Class
+optional is a container that can hold a value or it can be empty
+
+when we are performing database operation we are not sure whether we get a value or it can be empty or null by making use of optional we can avoid those null checks and instead we can make usage of better methods 
+ispresent() using which we can check whether it contain value or not
+with this we can avoid null pointer exception and instead of it we can either return a default value 
+
+get() can only return a value if wrapped object is not null otherwise throws a no such element exception
+
+//doing db call
+Employee e = repo.findById(id).get();
+if a value is present it will give output
+else throw no such element found exception to avoid it we use optional
+
+Optional<Employee> e = repo.findById(id);
+if(e.isPresent()){
+	return new ResponseEntity<>(e.get(),HTTPStatus.OK);
+}else{
+ return new ResponseEntity<>("not found",HTTPStatus.NOT_FOUND);
+}
+
+
+
+Optional<String> optionalValue = Optional.of("Hello, World!");
+
+optionalValue.ifPresentOrElse("name is present","name not present")
+
+        // Check if the value is present
+        if (optionalValue.isPresent()) {
+            // Get the value
+            String value = optionalValue.get();
+            System.out.println(value);
+        } else {
+            System.out.println("No value present");
+			
+			
+In Java, the transient keyword is used in the context of serialization. It indicates that a field should not be serialized when the object is converted to a byte stream. Serialization is the process of converting an object's state to a byte stream so that it can be saved to a file or transmitted over a network
+ 		
+Interface AND Abstract 
+1.if we dont know anthing about implementation we just have requirement specification then we should go for interface
+
+1.if we are talking about implementation but not completely(partial implementation) then we should go for abstract class
+
+2.every method in interface public & abstract whether we are declared or not. hence interface is considered as 100% abstract class
+
+2.Every method present in abstract class need to be public and abstract. in addition to abstarct method it can have concrete method also
+
+3.we can't declare intercae method with following modifiers
+as it is public we cant use private protected
+as it is abstract we cant use final. static, synchronized
+
+3.There are no restrictions for abstract class modifier
+
+4.Every interface variable present in interface is always public static final whether we have declared it or not
+
+4.every variable present in abstract class is always public. private and protected is not allowed
+
+5.variable initialization is required else compile time error will come
+
+5.variable initialization is not required
+
+6.constructor is not allowed in interface as constructor is used to initialize static variable as interface doesnt have we cant have constructor
+
+6.constructor is allowed
+
+7. abstract static and default methohds are allowed 
+
+7.abstract and concreate methods are allowed
+
+Java Persistence API (JPA) is a specification in Java that provides a standard for object-relational mapping (ORM) and data management in Java applications. It simplifies the interaction between Java applications and relational databases by allowing developers to work with Java objects and classes rather than dealing with database-specific SQL queries directly.
+
+JPA: A specification for ORM in Java, providing a standard way to interact with relational databases using Java objects. It is designed to be implemented by various frameworks.
+
+Hibernate: A popular ORM framework that implements JPA and offers additional features and optimizations beyond the JPA specification.
+
+public interface PersonRepository extends JpaRepository<Person, Long> {
+    @Query("SELECT p FROM Person p WHERE p.name = :name")
+    List<Person> findByName(@Param("name") String name);
+}
+
+// configure multiple databases using jpa
+
+@Configuration
+@EnableJpaRepositories(
+    basePackages = "com.example.primary.repository",
+    entityManagerFactoryRef = "primaryEntityManagerFactory",
+    transactionManagerRef = "primaryTransactionManager"
+)
+public class PrimaryDataSourceConfig {
+
+    @Bean(name = "primaryDataSource")
+    public DataSource dataSource() {
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setDriverClassName("com.mysql.cj.jdbc.Driver");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/primarydb");
+        dataSource.setUsername("root");
+        dataSource.setPassword("password");
+        return dataSource;
+    }
+
+    @Bean(name = "primaryEntityManagerFactory")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactory(
+            @Qualifier("primaryDataSource") DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean emf = new LocalContainerEntityManagerFactoryBean();
+        emf.setDataSource(dataSource);
+        emf.setPackagesToScan("com.example.primary.model");
+        emf.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+        return emf;
+    }
+
+    @Bean(name = "primaryTransactionManager")
+    public PlatformTransactionManager transactionManager(
+            @Qualifier("primaryEntityManagerFactory") LocalContainerEntityManagerFactoryBean entityManagerFactory) {
+        JpaTransactionManager transactionManager = new JpaTransactionManager();
+        transactionManager.setEntityManagerFactory(entityManagerFactory.getObject());
+        return transactionManager;
+    }
+}
+
+
+spring-boot-starter-web: For building web, including RESTful, applications using Spring MVC. Includes Tomcat as the default embedded container.
+
+spring-boot-starter-data-jpa: For using Spring Data JPA with Hibernate for data persistence.
+
+spring-boot-starter-security: For adding security features using Spring Security.
+
+spring-boot-starter-test: For testing Spring Boot applications with libraries such as JUnit, Hamcrest, and Mockito.
+
+
+List<Integer> sortedNumbers = numbers.stream()
+            // Sort the stream in natural order (ascending)
+            .sorted()
+            // Collect the results into a list
+            .collect(Collectors.toList());
+
+ List<Integer> sortedNumbers = numbers.stream()
+            // Sort the stream in descending order
+            .sorted(Comparator.reverseOrder())
+            // Collect the results into a list
+            .collect(Collectors.toList());
+
+
+ List<String> words = Arrays.asList("apple", "banana", "kiwi", "pineapple", "grape");
+
+        List<String> sortedByLength = words.stream()
+            // Sort using a lambda expression based on string length
+            .sorted((s1, s2) -> Integer.compare(s1.length(), s2.length()))
+            // Collect the results into a list
+            .collect(Collectors.toList());
+
+18-08-24			
+Date&Time API
+
+	LocalDateTime dt = LocalDateTime.now();
+	int dd = dt.getDayOfMonth();
+	String month = dt.getMonth().toString();
+	int mm = dt.getMonthValue();
+	int year = dt.getYear();
+	
+	int h = dt.getHour();
+	int m = dt.getMinute();
+	int s = dt.getSecond();
+	int n = dt.getNano();
+	
+	System.out.printf("\nDate : %d - %s - %d - %d\n",dd,month,mm,year);
+	System.out.println(dt);
+	System.out.printf("Date : %d - %s - %d - %d",dd,month,mm,year);
+	System.out.printf("\nTime : %d - %d - %d - %d",h,m,s,n);
+	
+	LocalDateTime dob = LocalDateTime.of(2000, 4, 21, 6,21,8);
+	System.out.println("\nDOB : "+dob);
+	System.out.println("Before 4 months : "+dob.minusMonths(4));
+	System.out.println("After 4 Months : "+dob.plusMonths(4));
+	
+	LocalDate dateOfBirth = LocalDate.of(2000, 4, 21);
+	LocalDate today = LocalDate.now();
+	Period p = Period.between(dateOfBirth, today);
+	System.out.printf("\nyour age is %d years %d months %d days",p.getYears(), p.getMonths(), p.getDays());
+
+	LocalDate buyCarDate = LocalDate.of(2030,04, 21);
+	Period timePeriod = Period.between(today, buyCarDate);
+	int daysLeftForCar = timePeriod.getYears()*365 + timePeriod.getMonths()*30 + timePeriod.getDays();
+	System.out.printf("\nDays left to buy new car %d\n",daysLeftForCar);
+
+	//find leap year or not
+	Year yr = Year.of(2024);
+	System.out.println(yr.isLeap()?"Leap Year ":"Not a leap year ");
+	System.out.println(yr);
+	
+//		DateTimeFormatter formatter = DateTimeFormatter.
+	LocalDateTime beforeFormat = LocalDateTime.now();
+	System.out.println("Before formatting "+beforeFormat);
+	
+	DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("dd-MM-YYYY HH:mm:ss");
+	
+	String afterFormat = beforeFormat.format(dateFormat);
+	System.out.println("After formatting "+afterFormat);
+	
+	Date : 18 - AUGUST - 8 - 2024
+	2024-08-18T14:27:15.275062200
+	Date : 18 - AUGUST - 8 - 2024
+	Time : 14 - 27 - 15 - 275062200
+	DOB : 2000-04-21T06:21:08
+	Before 4 months : 1999-12-21T06:21:08
+	After 4 Months : 2000-08-21T06:21:08
+
+	your age is 24 years 3 months 28 days
+	Days left to buy new car 2068
+	Leap Year 
+	2024
+	Before formatting 2024-08-18T14:27:15.296007300
+	After formatting 18-08-2024 14:27:15
+
+Drawbacks of previous datetime api
+		1. Easily Changeable Dates (Date and Calendar Classes)
+		Problem: The old Date and Calendar classes could be changed after they were created. This could lead to mistakes, especially when multiple parts of a program try to use the same date at the same time.
+		2. Confusing and Error-Prone Date Class
+		Problem: The Date class was confusing to use. For example, months were numbered starting from 0 (January is 0, February is 1, etc.), which often caused errors.
+		3. Complicated Calendar Class
+		Problem: The Calendar class was introduced to fix some problems with Date, but it was complicated and hard to use correctly. It was easy to make mistakes when working with dates.
+		4. Not Safe to Use SimpleDateFormat with Multiple Threads
+		Problem: SimpleDateFormat, used for formatting and parsing dates, was not safe to use in programs that run multiple tasks at the same time. This could cause incorrect date values to appear.
+		5. Difficult Time Zone Handling
+		Problem: Working with different time zones was difficult and error-prone with the old classes. The Date class didn't even store time zone information.
+		6. Limited Formatting and Parsing Options
+		Problem: Formatting dates into strings or parsing strings into dates was limited and often required extra work to get right.
+		7. Hard to Do Date Calculations
+		Problem: Simple tasks like adding days or months to a date were complicated and could easily go wrong.
+	
+29-08-24
+	  
+	 
+	 Test t = new Test();
+	 Test t // reference type
+	 new Test();//run time object
+	 In overloading method resolution : which method has to exexute is called method resolution
+	 In overrloading method resoltiion is always take care by compiler based on reference type
+	 
+	 
+29-12-24
+	Collection
+		If we want to represent a group of objects as single entity then we should go for collection
+		
+	filter	Predicate<T>	A boolean condition filters the elements (e.g., keep only even numbers).	
+	map	Function<T, R>	Transforms the input elements into a new type or value (e.g., square a number, find string lengths).	
+	sorted	Comparator<T>	Orders the elements either in natural order or using custom logic.
+	
+	Streams
+		If we want to process objects from collection stream	
+	
+	Streams s = c.stream();//c is collection it could be list set etc
+	
+	filter(Predicate) returns boolean
+		filter is used to filter a collection based on its condition
+	map(Function) return anytime of value perform
+	count()
+		int noOfFailedStudents = marks.stream().filter(m->m>=35).count();
+	sorted() natural sorting order
+	sorted(Comparator) customised sorting order
+		in sorted min element is first element max is last element here min and max refers to min index value and max index value not by value
+		[1,2,3,4,5] min =1, max = 5 	
+	min(Comparator)
+	max(Comparator)
+	forEach()
+	toArray
+	//toArray
+		Integer[] i = marks.stream().toArray(Integer[]::new);
+	
+	//Integer array to stream
+		Stream.of(i).forEach(System.out::println);
+		
+Comparator : Comparator present in java.util package and it defines two methods
+		1.compare()
+		2.equals()
+	
+		1.public int compare(Object obj1, Object obj2)
+			returns -ve if and only if obj1 has to come before obj2 (obj1<obj2)
+			
+			returns +ve if and only if obj1 has to come after obj2 (obj1>obj2)
+			
+			returns 0 if and only if obj1 is equal to obj2 (obj1==obj2)
+		
+		2.public boolean equals(Object obj)
+		
+		
+		whenever we are implementing comparator interface compulsory we should provide implemetation only for compare method
+		and we not required to provide implementation for eqauls method because it is already available to our class from Object class through inheritance
+		
+		public comparator implements Comparator{
+		
+			comparator(){
+			return 
+			}
+		}
+	
+		
+	write a program to insert integer object into the treeset where the sorting order is descending order
+	
+	
+	//here we are using our own customized sorting order else default it used naturalsorting order as treeset
+	//internally uses comapreTo()
+	
+	 Set<Integer> set = new TreeSet<>(new MyComparator());
+	 set.add(10);
+	 set.add(20);
+	 System.out.println("Custom sorting using TREE SET : " +set); 	
+	 
+	 public class MyComparator implements Comparator<Integer>{
+
+		@Override
+		public int compare(Integer o1, Integer o2) {
+			// TODO Auto-generated method stub
+			if(o1<o2)
+				return 1;
+			if(o1>o2)
+				return -1;
+			return 0;
+		}
+		
+	}
+	
+	various Possible ways to implement compare method
+	
+	we can do above way or below
+	1.return o1.compareTo(o2); //ascending order
+	2.return -o1.compareTo(o2);//descending order
+	3.return o2.compareTo(o1);//descending order
+	4.return o1.compareTo(o2); //ascending order
+	5.return +1; insertion order
+	6.return -1; reverse of insertion order
+	7. return 0; only first element is inserted remaining all duplicate and wont be added
+	
+	
+Comparable vs Comparator
+		Comparable 
+			used for default natual sorting order
+			is present in java.lang package
+			contains compareTo() method
+			all wrapper classes and string classes implements it
+		Comparator
+			used for customised sorting order
+			is present in java.util package
+			contains compare and equals()
+			
+Collections vs Collections
+		Collection
+			is an interface
+			to represent group of objects into a single entity
+		Collections
+			is a class
+			is a utility class which defines several utility methods like searching sorting  present in java.util package for collection object
+				ex Collections.sort(arrayList)
+			
+	

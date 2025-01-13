@@ -1,0 +1,33 @@
+Streams Questions
+1.remove duplicates from list
+2.show duplicated elements from list
+3.Find the frequency of each character in a string using Java 8 streams
+4.Find the frequency of each element in an array or list
+5.Join a list of strings with '[' as prefix, ']' as suffix, and ',' as delimiter
+6.Sort a given list of decimals in reverse order
+7.Print the numbers from a given list of integers that are multiples of 5
+8.Find the maximum and minimum sum average of a list of integers
+9.Merge two unsorted arrays into a single sorted array using Java 8 streams
+10.Merge two unsorted arrays into a single sorted array without duplicates
+11.Get the three maximum and three minimum numbers from a given list of integers
+12.Check if two strings are anagrams or not using Java 8 streams
+13.Find the sum of all digits of a number in Java 8
+14.Find the second largest number in an integer array
+15.Find the sum and average of all elements in an integer array
+16.Find the common elements between two arrays
+17.convert int[] to List <Integer> and String to List<String>
+18.Reverse each word of a string using Java 8 streams
+20.Write a Java 8 program to print the first 10 even numbers.
+21.Find the most repeated element in an array
+22.Check if a string is a palindrome using Java 8 streams
+23.Find strings in a list that start with a number
+24.Print duplicate characters in a string
+25.Find the first repeated character in a string
+26.Find the first non-repeated character in a string
+
+
+
+
+
+
+

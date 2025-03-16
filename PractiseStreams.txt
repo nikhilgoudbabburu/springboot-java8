@@ -1,0 +1,337 @@
+package com.practise.corejava.java8;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Hashtable;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
+
+public class PractiseStreams {
+
+	public static void main(String[] args) {
+		
+		Stream<String> stream = Stream.of("A", "B", "C", "D");
+		System.err.println(stream.peek(System.out::print)
+		                      .findAny()
+		                      .orElse("NA"));
+		
+
+		List<Integer> list = Arrays.asList(6, 7, 1, 2, 3, 4, 5, 1, 2, 3);
+
+		System.out.println(list);
+		
+		  
+
+		int[] array = { 6, 7, 1, 2, 3, 4, 5, 1, 2, 3 };
+		String string = "zcharacter is currency";
+
+		String[] stringArray = { "a", "b", "c", "d", "a", "b", };
+		List<String> strings = Arrays.asList("1apple", "bananasa", "cherrys");
+
+		// 1. Remove duplicates
+		List<Integer> removeDuplicate = list.stream().distinct().collect(Collectors.toList());
+		System.out.println("removeDuplicate : " + removeDuplicate);
+
+		// 2. Show duplicated elements
+		Set<Integer> set = new HashSet<>();
+		Set<Integer> set1 = list.stream().filter(n -> set.add(n) != true).collect(Collectors.toSet());
+		System.out.println("set1 : " + set1);
+
+		Set<Integer> set2 = list.stream()
+				.collect(Collectors.groupingBy(n -> n, LinkedHashMap::new, Collectors.counting())).entrySet().stream()
+				.filter(e -> e.getValue() > 1).map(e -> e.getKey()).collect(Collectors.toSet());
+		System.out.println("set2 : " + set2);
+
+		// 3. Find the frequency of each character in a string using Java 8 streams
+		Map<Object, Long> frequencyofCharacterInString = Stream.of(string.replace(" ", "").split(""))
+				.collect(Collectors.groupingBy(n -> n, LinkedHashMap::new, Collectors.counting()));
+		System.out.println("frequencyofCharacterInString : " + frequencyofCharacterInString);
+
+		String returnFirstRepeatedCharacterInString = Stream.of(string.replace(" ", "").split(""))
+				.collect(Collectors.groupingBy(n -> n, LinkedHashMap::new, Collectors.counting())).entrySet().stream()
+				.filter(e -> e.getValue() > 1).map(e -> e.getKey()).findFirst().get();
+		System.out.println("returnFirstRepeatedCharacterInString : " + returnFirstRepeatedCharacterInString);
+//
+		// 4. Find the frequency of each element in an array or list
+		Map<Object, Long> findOcc = list.stream()
+				.collect(Collectors.groupingBy(n -> n, LinkedHashMap::new, Collectors.counting()));
+		System.out.println("findOcc : " + findOcc);
+
+		Map<Object, Long> findOcc1 = IntStream.of(array).boxed()
+				.collect(Collectors.groupingBy(n -> n, Collectors.counting()));
+		System.out.println("findOcc1 : " + findOcc1);
+//
+		// 5. Join a list of strings with '[' as prefix, ']' as suffix, and ',' as
+		// delimiter
+		String joinListOfStrings = list.stream().map(n -> "[" + n + "]").collect(Collectors.joining(","));
+		System.out.println("joinListOfStrings : " + joinListOfStrings);
+//
+		// 6. Sort a given list of decimals in reverse order
+		List<Integer> reverseDecimals = list.stream().sorted(Comparator.reverseOrder()).toList();
+		System.out.println("reverseDecimals : " + reverseDecimals);
+//
+		List<Integer> reverseDecimals1 = list.stream().sorted((n1, n2) -> n2.compareTo(n1)).toList();
+		System.out.println("reverseDecimals1 : " + reverseDecimals1);
+//
+		// 7. Print the numbers from a given list of integers that are multiples of 5
+//			List<Integer> multiplesOf5 = ;
+//			System.out.println("multiplesOf5 : " + multiplesOf5);
+
+		// 8. Find the maximum and minimum sum average of a list of integers
+//			1.find sum 
+		int sum = list.stream().mapToInt(i -> i).sum();
+		System.out.println("sum : " + sum);
+		int sum1 = IntStream.of(array).sum();
+		System.out.println("sum1 : " + sum1);
+
+//			2.find min
+		int min = list.stream().mapToInt(i -> i).min().getAsInt();
+		System.out.println("min : " + min);
+		int min1 = IntStream.of(array).min().getAsInt();
+		System.out.println("min1 : " + min1);
+
+//			3.find max
+		int max = list.stream().mapToInt(i -> i).max().getAsInt();
+		System.out.println("max : " + max);
+		int max1 = IntStream.of(array).max().getAsInt();
+		System.out.println("max1 : " + max1);
+
+//			4.find avg
+		Double average = list.stream().mapToDouble(i -> i).average().getAsDouble();
+		System.out.println("average : " + average);
+		Double average1 = DoubleStream.of(average).average().getAsDouble();
+		System.out.println("average1 : " + average1);
+
+		// 9. Merge two unsorted arrays into a single sorted array using Java 8 streams
+//			int[] sortedArray = ;   
+//			System.out.println("sortedArray : " + Arrays.toString(sortedArray));
+//
+//			List<Integer> mergedSortedList1 = ;
+//			System.out.println("mergedSortedList1 : " + mergedSortedList1);
+//
+//			List<Integer> mergedSortedList = ;
+//			System.out.println("mergedSortedList : " + mergedSortedList);
+//
+//			// 10. Merge two unsorted arrays into a single sorted array without duplicates
+//			int[] distinctSortedArray = ;
+//			System.out.println("distinctSortedArray : " + Arrays.toString(distinctSortedArray));
+//
+		// 11. Get the three maximum and three minimum numbers from a given list of
+		// integers
+		List<Integer> minThree = list.stream().sorted().limit(3).toList();
+		System.out.println("minThree : " + minThree);
+
+		List<Integer> maxThree = list.stream().sorted(Comparator.reverseOrder()).limit(3).toList();
+		System.out.println("maxThree : " + maxThree);
+//
+		// 12. Check if two strings are anagrams or not using Java 8 streams
+//			anagram means both string should have same charcters
+		String s1 = "heart";
+		String s2 = "earth";
+		List<Character> s11 = s1.chars().mapToObj(c -> (char) c).sorted().toList();
+		List<Character> s22 = s2.chars().mapToObj(c -> (char) c).sorted().toList();
+		Boolean anagram = s11.equals(s22);
+		System.out.println(anagram);
+
+		// 13. Find the sum of all digits of a number in Java 8
+		int num = 123;
+		int sumOfAllDigits = String.valueOf(num).chars().map(c -> Character.getNumericValue(c)).sum();
+		System.out.println(sumOfAllDigits);
+//
+		List<String> sortStringBasedOnLength = strings.stream().sorted(Comparator.comparingInt(String::length))
+				.toList();
+		System.out.println("sortStringBasedOnLength : " + sortStringBasedOnLength);
+
+		List<String> sortStringBasedOnLength1 = strings.stream().sorted((str1, str2) -> str1.length() - str2.length())
+				.toList();
+		System.out.println("sortStringBasedOnLength : " + sortStringBasedOnLength1);
+//
+		// 14. Find the second largest number in an integer array
+		int secondLargest = list.stream().sorted(Comparator.reverseOrder()).skip(1).findFirst().get();
+		System.out.println("secondLargest : " + secondLargest);
+
+		// 15. Find the sum and average of all elements in an integer array
+		int sumOfArray = list.stream().mapToInt(i -> i).sum();
+		System.out.println("sumOfArray : " + sumOfArray);
+
+		double avgOfArray = list.stream().mapToInt(i -> i).average().getAsDouble();
+		System.out.println("avgOfArray : " + avgOfArray);
+
+		// 16. Find the common elements between two arrays
+//			List<Integer> commonElements = ;
+//			System.out.println("commonElements : " + commonElements);
+//
+		// 17. Convert int[] to List<Integer> and String to List<String>
+		List<Integer> intArrToList = IntStream.of(array).boxed().toList();
+		System.out.println("intArrToList : " + intArrToList);
+
+		List<Integer> intArrToList1 = Arrays.stream(array).boxed().toList();
+		System.out.println("intArrToList1 : " + intArrToList1);
+
+		List<String> strToList = string.chars().mapToObj(i -> String.valueOf((char) i)).toList();
+		System.out.println("strToList : " + strToList);
+
+		// 18. Reverse each word of a string using Java 8 streams
+		List<String> reverseEachWord = strings.stream().map(a -> new StringBuilder(a).reverse().toString()).toList();
+		System.out.println("reverseEachWord : " + reverseEachWord);
+
+		String reverseEachWordInString = Stream.of(string.split(" ")).map(word -> new StringBuilder(word).reverse())
+				.collect(Collectors.joining(" "));
+		System.out.println("reverseEachWordInString : " + reverseEachWordInString);
+
+		// 19. Write a Java 8 program to reverse an integer array.
+		List<Integer> reverseIntArray = IntStream.of(array).boxed().collect(Collectors.toCollection(ArrayList::new));
+		Collections.reverse(reverseIntArray);
+		System.out.println("reverseIntArray : " + reverseIntArray);
+
+		// 20. Write a Java 8 program to print the first 10 even numbers.
+		List<Integer> findFirst10Even = IntStream.range(1, 21).boxed().filter(n -> n % 2 == 0).toList();
+		System.out.println("findFirst10Even : " + findFirst10Even);
+
+		// 21. Find the most repeated element in an array
+//			int mostRepeatedElement = list.stream().
+//					collect(Collectors.groupingBy(n->n, LinkedHashMap::new,Collectors.counting()))
+//					.entrySet()
+//					.stream()
+//					.max(Comparator.comparingLong(ent->ent.getValue())).map(k->k.getKey()).get();
+		int mostRepeatedElement = list.stream().collect(Collectors.groupingBy(n -> n, Collectors.counting())).entrySet()
+				.stream().max(Comparator.comparingLong(n -> n.getValue())).map(n -> n.getKey()).get();
+		System.out.println("mostRepeatedElement : " + mostRepeatedElement);
+
+		// 22. Check if a string is a palindrome using Java 8 streams
+		String palli = "wooaw";
+		boolean checkPalindrome = new StringBuilder(palli).reverse().equals(palli);
+		System.out.println(checkPalindrome);
+
+		// 23. Find strings in a list that start with a number
+		List<String> startsWithNum = strings.stream().filter(n -> Character.isDigit(n.charAt(0))).toList();
+		System.out.println("startsWithNum : " + startsWithNum);
+
+		// 24. Print duplicate characters in a string
+		Set<Character> set3 = new HashSet<>();
+		Set<Character> duplicateChar = string.chars().mapToObj(c -> (char) c).filter(n -> set3.add(n) != true)
+				.collect(Collectors.toSet());
+		System.out.println("dupString : " + duplicateChar);
+
+		// 25. Find the first repeated character in a string
+		Set<Character> set4 = new HashSet<>();
+		char firstRepeatedChar = string.chars().mapToObj(c -> (char) c).filter(n -> set4.add(n) != true).findFirst()
+				.get();
+		System.out.println("firstRepeatedChar : " + firstRepeatedChar);
+
+//		 26. Find the first non-repeated character in a string
+		String firstNonRepeatedChar = Stream.of(string.split(""))
+				.collect(Collectors.groupingBy(n -> n, LinkedHashMap::new, Collectors.counting())).entrySet().stream()
+				.filter(e -> e.getValue() == 1).map(k -> k.getKey()).findFirst()
+				.orElseThrow(() -> new NoSuchElementException("no non repeated element"));
+		System.out.println("firstNonRepeatedChar : " + firstNonRepeatedChar);
+
+//		27.how to remove spaces in string
+		String removeStringSpaces = string.chars().mapToObj(c -> (char) c).filter(c -> c != ' ')
+				.map(str -> String.valueOf(str)).collect(Collectors.joining());
+		String removeStringSpaces1 = string.replace(" ", "");
+		System.out.println("removeStringSpaces : " + removeStringSpaces);
+		System.out.println("removeStringSpaces1 : " + removeStringSpaces1);
+
+//		28 reverse an int without using string methods
+		int numm = 123456;
+		int no = numm;
+		int rev = 0;
+		while (no != 0) {
+			rev = rev * 10 + no % 10;
+			no = no / 10;
+		}
+		System.out.println("Reverse of No " + numm + " is : " + rev);
+
+//		29.Have an integer of arrays {1,2,3,4} and output should be {“1”, “2”, “3”, “4”}. 
+		int[] arr = { 1, 2, 3, 4 };
+		String soutput = IntStream.of(arr).mapToObj(n -> "\"" + n + "\"").collect(Collectors.joining(","));
+		soutput = "{" + soutput + "}";
+		System.out.println("Reverse of No " + soutput);
+
+//		30.Convert Integer array to List of Strings using Streams
+		Integer[] intArray = { 1, 2, 3, 4 };
+		List<String> stringList = Arrays.stream(intArray).map(s -> String.valueOf(s)).collect(Collectors.toList());
+		System.out.println("stringList " + stringList);
+
+//		31 GroupBy city
+		List<Student> student = new ArrayList<>();
+		student.add(new Student("nik", Arrays.asList(50, 40, 70), 18, "Hyderabad"));
+		student.add(new Student("pav", Arrays.asList(50, 40, 60), 19, "Hyderabad"));
+		student.add(new Student("akh", Arrays.asList(60, 80, 70), 17, "Chennai"));
+		student.add(new Student("laddu", Arrays.asList(40, 60, 70), 20, "Chennai"));
+
+		Map<String, List<String>> groupByCity = student.stream().collect(
+				Collectors.groupingBy(Student::getCity, Collectors.mapping(Student::getName, Collectors.toList())));
+		System.out.println("groupByCITY : " + groupByCity);
+		
+	
+
+//		32.Given list of students then create a map with name as key and age as value
+		Map<String, Integer> convertStudentToMap = student.stream()
+				.collect(Collectors.toMap(Student::getName, Student::getAge));
+		System.out.println("convertStudentToMap : " + convertStudentToMap);
+
+//		33.Get Highest age by city
+		Map<String, Optional<Student>> getHighestAgeBySal = student.stream().collect(
+				Collectors.groupingBy(Student::getCity, Collectors.maxBy(Comparator.comparingInt(Student::getAge))));
+		getHighestAgeBySal.forEach((k, v) -> {
+			System.out.println(k + " : " + v.get().getAge());
+
+		});
+
+//		33.Given list of students find average of max average age of student
+		Student maxAvgStudent = student.stream().max(Comparator.comparingDouble(Student::getAge)).orElse(null);
+		System.out.println("maxAverage score of student : " + maxAvgStudent.getName() + "");
+
+//		34.Count the occurrences of each character in a string (pure Java, no streams)
+		String countOccOfString = "aabbbcccdddd";
+		String[] strArr = countOccOfString.split("");
+		Map<String, Integer> countCharMap = new LinkedHashMap<>();
+		for(String character : strArr) {
+			if(countCharMap.containsKey(character)) {
+				countCharMap.put(character, countCharMap.get(character)+1);
+			}else {
+				countCharMap.put(character, 1);
+			}
+		}
+		System.out.println("Count occurence of each character in string : " +countCharMap);
+		
+//		31 GroupBy  them by their city and count the number of students in each city.
+		Map<String, Long> groupByCity1 = student.stream().collect(
+				Collectors.groupingBy(Student::getCity, Collectors.counting()));
+		System.out.println("groupByCity1 : " + groupByCity1);
+		
+//		32.compare two string and return common and identical character of string
+		String firstString = "abcdef";
+		String secondString = "defghi";
+		
+		List<String> f1 = Stream.of(firstString.split("")).toList();
+		
+		List<String> commonElements = Stream.of(secondString.split("")).filter(c->f1.contains(c)).toList();
+		System.out.println(commonElements);
+		
+		List<String> identicalElements = Stream.of(secondString.split("")).filter(c->!f1.contains(c)).toList();
+		System.out.println(identicalElements);
+		
+//		33.sum of all digits of a number
+		
+	}
+
+}
